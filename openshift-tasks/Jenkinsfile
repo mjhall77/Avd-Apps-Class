@@ -23,7 +23,7 @@ podTemplate(
 
     // Checkout Source Code.
     stage('Checkout Source') {
-        git 'https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git'
+        git 'https://github.com/mjhall77/Avd-Apps-Class.git'
     }
 
     // Build the Tasks Service
