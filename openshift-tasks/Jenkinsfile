@@ -34,10 +34,11 @@ podTemplate(
       // Extract version from the pom.xml
       def version = getVersionFromPom("pom.xml")
 
-      // TBD Set the tag for the development image: version + build number
-      def devTag  = "0.0-0"
+      // Set the tag for the development image: version + build number
+      def devTag = "${version}-" + currentBuild.number
+
       // Set the tag for the production image: version
-      def prodTag = "0.0"
+      def prodTag = "${version}"
 
       // Set devProject 
       def devProject  = "${prefix}-tasks-dev"
