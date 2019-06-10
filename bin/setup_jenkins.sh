@@ -31,7 +31,7 @@ items:
       source:
         type: "Git"
         git:
-          uri: "https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git"
+          uri: "https://github.com/mjhall77/Avd-Apps-Class.git"
       strategy:
         type: "JenkinsPipeline"
         jenkinsPipelineStrategy:
