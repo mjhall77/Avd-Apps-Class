@@ -34,7 +34,7 @@ items:
           uri: "https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git"
       strategy:
         type: "JenkinsPipeline"
-          jenkinsPipelineStrategy:
+        jenkinsPipelineStrategy:
           jenkinsfilePath: Jenkinsfile
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
