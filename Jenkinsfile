@@ -168,6 +168,9 @@ podTemplate(
               // OpenShift 3
               dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
 
+              openshift.set("env", "dc/tasks-blue", "VERSION='0.0 (tasks-blue)'")
+              openshift.set("env", "dc/tasks-green", "VERSION='0.0 (tasks-green)'")
+
               openshift.apply(dc)
 
               // Update Config Map in change config files changed in the source
