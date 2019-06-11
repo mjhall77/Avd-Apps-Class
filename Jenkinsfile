@@ -103,7 +103,7 @@ podTemplate(
         // Update the Image on the Development Deployment Config
           openshift.withCluster() {
             openshift.withProject("${devProject}") {
-              openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
+              openshift.set("image", "dc/tasks", "-n ${devProject} tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
 
           // Update the Config Map which contains the users for the Tasks application
           // (just in case the properties files changed in the latest commit)
@@ -167,7 +167,7 @@ podTemplate(
               // OpenShift 3
               dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
 
-              openshift.set("env", "dc/${destApp}", "--overwrite VERSION='${prodTag} (${destApp})'")
+              openshift.set("env", "dc/${destApp}", "-n ${prodProject} --overwrite VERSION='${prodTag} (${destApp})'")
 
               openshift.apply(dc)
 
