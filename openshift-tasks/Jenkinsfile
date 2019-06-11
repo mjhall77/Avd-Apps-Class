@@ -111,7 +111,7 @@ podTemplate(
               def configmap = openshift.create('configmap', 'tasks-config', '--from-file=./configuration/application-users.properties', '--from-file=./configuration/application-roles.properties' )
 
           // Deploy the development application.
-              openshift.set("env", "dc/tasks", "--overwrite VERSION='0.0 (tasks-dev)'")
+              openshift.set("env", "dc/tasks", "-n ${devProject} --overwrite VERSION='${devTag} (tasks-dev)'")
               openshift.selector("dc", "tasks").rollout().latest();
 
           // Wait for application to be deployed
