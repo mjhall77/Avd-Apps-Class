@@ -168,8 +168,8 @@ podTemplate(
               // OpenShift 3
               dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
 
-              openshift.set("env", "dc/tasks-blue", "VERSION='0.0 (tasks-blue)'", overwrite)
-              openshift.set("env", "dc/tasks-green", "VERSION='0.0 (tasks-green)'", overwrite)
+              openshift.set("env", "dc/tasks-blue", "VERSION='0.0 (tasks-blue)' --overwrite")
+              openshift.set("env", "dc/tasks-green", "VERSION='0.0 (tasks-green)' --overwrite")
 
               openshift.apply(dc)
 
