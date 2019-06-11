@@ -103,7 +103,6 @@ podTemplate(
         // Update the Image on the Development Deployment Config
           openshift.withCluster() {
             openshift.withProject("${devProject}") {
-              openshift.set("env", "dc/tasks", "VERSION='0.0 (tasks-dev)'")
               openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
 
           // Update the Config Map which contains the users for the Tasks application
@@ -112,6 +111,7 @@ podTemplate(
               def configmap = openshift.create('configmap', 'tasks-config', '--from-file=./configuration/application-users.properties', '--from-file=./configuration/application-roles.properties' )
 
           // Deploy the development application.
+              openshift.set("env", "dc/tasks", "--overwrite VERSION='0.0 (tasks-dev)'")
               openshift.selector("dc", "tasks").rollout().latest();
 
           // Wait for application to be deployed
@@ -190,10 +190,6 @@ podTemplate(
             }
           }
         }
-        // TBD: Determine which application is active
-        //      Set Image, Set VERSION
-        //      Deploy into the other application
-        //      Make sure the application is running and ready before proceeding
       }
 
       stage('Switch over to new Version') {
