@@ -77,7 +77,7 @@ podTemplate(
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
         echo "Publish to Nexus"
-        sh "${mvnCmd} deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::http://nexus3-gpte-hw-cicd.apps.na311.openshift.opentlc.com/repository/releases"
+        sh "${mvnCmd} deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/releases"
         // TBD: Publish to Nexus
       }
 
@@ -89,8 +89,8 @@ podTemplate(
         script {
           openshift.withCluster() {
             openshift.withProject("${devProject}") {
-              openshift.selector("bc", "tasks").startBuild("--from-file=http://nexus3-gpte-hw-cicd.apps.na311.openshift.opentlc.com/repository/releases/org/jboss/quickstarts/eap/tasks/${version}/tasks-${version}.war", "--wait=true")
-              openshift.tag("tasks:latest", "tasks:${devTag}")
+              openshift.selector("bc", "tasks").startBuild("--from-file=./target/openshift-tasks.war", "--wait=true")
+              openshift.tag("tasks:latest", "tasks:${devTag}") 
             }
           }
         }
