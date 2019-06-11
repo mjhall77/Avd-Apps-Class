@@ -56,20 +56,23 @@ podTemplate(
       }
 
       // TBD: The next two stages should run in parallel
+      parallel (
+        // Using Maven run the unit tests
+        "Unit Tests": {
+          stage('Unit Tests') {
+            echo "Running Unit Tests"
+            sh "${mvnCmd} test"
+          }
+        },
 
-      // Using Maven run the unit tests
-      stage('Unit Tests') {
-        echo "Running Unit Tests"
-        sh "${mvnCmd} test"
-        // TBD: Execute Unit Tests
-      }
-
-      // Using Maven to call SonarQube for Code Analysis
-      stage('Code Analysis') {
-        echo "Running Code Analysis"
-        sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-gpte-hw-cicd.apps.na311.openshift.opentlc.com -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}"
-        // TBD: Execute Sonarqube Tests
-      }
+        // Using Maven to call SonarQube for Code Analysis
+        "Code Analysis": {
+          stage('Code Analysis') {
+            echo "Running Code Analysis"
+            sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000 -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}"
+          }
+        }
+      )
 
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
