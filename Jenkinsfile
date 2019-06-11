@@ -191,6 +191,15 @@ podTemplate(
                 sleep 5
                 rc_prod = openshift.selector("rc", "${destApp}-${dc_version}").object()
               }
+
+              activeApp = openshift.selector("route", "tasks").object().spec.to.name
+              if (activeApp == "tasks-green") {
+                destApp = "tasks-blue"
+              }
+
+              echo "Active Application:      " + activeApp
+              echo "Destination Application: " + destApp
+
             }
           }
         }
